@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :attractions
-  # resources :rides
+  
   post "/rides/new", to: "rides#new"
 
   root "static#home"

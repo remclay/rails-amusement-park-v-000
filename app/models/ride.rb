@@ -1,5 +1,3 @@
-require 'pry'
-
 class Ride < ActiveRecord::Base
   belongs_to :attraction
   belongs_to :user
@@ -7,11 +5,10 @@ class Ride < ActiveRecord::Base
   def take_ride
     @user = self.user
     @attraction = self.attraction
-
     if enough_tickets && correct_height
-        ride_attraction
+      ride_attraction
     elsif !enough_tickets && !correct_height
-        "Sorry. You do not have enough tickets to ride the #{attraction.name}. You are not tall enough to ride the #{attraction.name}."
+      "Sorry. You do not have enough tickets to ride the #{attraction.name}. You are not tall enough to ride the #{attraction.name}."
     elsif !enough_tickets
       "Sorry. You do not have enough tickets to ride the #{attraction.name}."
     elsif !correct_height
@@ -28,15 +25,11 @@ class Ride < ActiveRecord::Base
   end
 
   def ride_attraction
-    # binding.pry
     @user.tickets = @user.tickets - @attraction.tickets
     @user.nausea = @user.nausea + @attraction.nausea_rating
     @user.happiness = @user.happiness + @attraction.happiness_rating
 
-    # user.update(:happiness => happiness_rating, :nausea => nausea_rating, :tickets => ticket_balance)
     @user.save
-
-    # "Thanks for riding the #{self.attraction.name}!"
+    "Thanks for riding the #{self.attraction.name}!"
   end
-
 end
